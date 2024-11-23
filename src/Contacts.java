@@ -18,14 +18,15 @@ public class Contacts {
     private String name;
     // @Column(name = "number")
     private String number;
-
+    private boolean target;
     public Contacts() {
     }
 
-    public Contacts(Long id, String name, String number) {
+    public Contacts(Long id, String name, String number, boolean target) {
         this.id = id;
         this.name = name;
         this.number = number;
+        this.target = target;
     }
 
     public String getContactName() {

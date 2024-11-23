@@ -47,8 +47,16 @@ public class ContactService {
         return ContactRepository.save(contacts);
 
     }
-
     public List<Contacts> getAllContacts() {
         return ContactRepository.findAll();
+    }
+    public Contacts updateStartTarget(Long id) {
+        Contacts contacts = ContactRepository.findById(id).orElseThrow(() -> new RuntimeException("Contact not found"));
+        if (contacts.getTarget() == true) {
+            contacts.setTarget(false);
+        } else {
+            contacts.setTarget(true);
+        }
+        return ContactRepository.save(contacts);
     }
 }
