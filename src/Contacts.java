@@ -17,6 +17,8 @@ public class Contacts {
     // @Column(name = "name")
     private String name;
     // @Column(name = "number")
+
+    private boolean target;
     private String email;
     private String address;
     private String media_account;
@@ -27,8 +29,6 @@ public class Contacts {
     )
     @Column(name = "number")
     private List<String> numbers = new ArrayList<>();
-    private boolean target;
-
     public Contacts() {
     }
 
@@ -36,6 +36,7 @@ public class Contacts {
         this.id = id;
         this.name = name;
         this.target = target;
+
         this.email = email;
         this.address = address;
         this.media_account = media_account;
