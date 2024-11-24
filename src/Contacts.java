@@ -17,16 +17,28 @@ public class Contacts {
     // @Column(name = "name")
     private String name;
     // @Column(name = "number")
-    private String number;
+    private String email;
+    private String address;
+    private String media_account;
+    @ElementCollection
+    @CollectionTable(
+            name = "phone_numbers",
+            joinColumns = @JoinColumn(name = "contact_id")
+    )
+    @Column(name = "number")
+    private List<String> numbers = new ArrayList<>();
     private boolean target;
+
     public Contacts() {
     }
 
-    public Contacts(Long id, String name, String number, boolean target) {
+    public Contacts(Long id, String name, boolean target, String email, String address, String media_account) {
         this.id = id;
         this.name = name;
-        this.number = number;
         this.target = target;
+        this.email = email;
+        this.address = address;
+        this.media_account = media_account;
     }
 
     public String getContactName() {
