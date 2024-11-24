@@ -1,26 +1,38 @@
 package com.example.interfa.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.alibaba.excel.annotation.ExcelIgnore;
+import com.alibaba.excel.annotation.ExcelProperty;
+import com.alibaba.excel.annotation.write.style.ColumnWidth;
+import jakarta.persistence.*;
+import lombok.Data;
 
+import java.util.ArrayList;
+import java.util.List;
+
+@Data
 @Entity
 @Table(name = "users")
 public class Contacts {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    // @Column(name = "id")
+//    @ExcelProperty("用户编号")
+//    @ColumnWidth(20)
     private Long id;
-    // @Column(name = "name")
+    //    @ExcelProperty("名字")
+//    @ColumnWidth(20)
+//    @ExcelCell(priority = "B", cellTitle = "名称")
     private String name;
-    // @Column(name = "number")
-
+    @ExcelIgnore
     private boolean target;
+    @ExcelProperty("邮箱")
+    @ColumnWidth(20)
     private String email;
+    @ExcelProperty("地址")
+    @ColumnWidth(20)
     private String address;
+    @ExcelProperty("媒体账号")
+    @ColumnWidth(20)
     private String media_account;
     @ElementCollection
     @CollectionTable(
@@ -29,6 +41,7 @@ public class Contacts {
     )
     @Column(name = "number")
     private List<String> numbers = new ArrayList<>();
+
     public Contacts() {
     }
 
@@ -36,34 +49,13 @@ public class Contacts {
         this.id = id;
         this.name = name;
         this.target = target;
-
         this.email = email;
         this.address = address;
         this.media_account = media_account;
     }
 
-    public String getContactName() {
-        return name;
+    public boolean getTarget() {
+        return target;
     }
 
-    public void setContactName(String name) {
-        this.name = name;
-    }
-
-    public String getPhoneNumber() {
-        return number;
-    }
-
-    public void setPhoneNumber(String number) {
-        this.number = number;
-
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 }
