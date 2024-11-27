@@ -73,4 +73,35 @@ public class ContactsController {
         return ResponseEntity.ok(updatedContacts);
     }
 
+    //EXPORT
+    @GetMapping("/export/user")
+    public void exportUserExcel(HttpServletResponse response) {
+        try {
+            this.setExcelResponseProp(response, "用户列表");
+            List<Contacts> contacts = contactSer.getAllContacts();
+
+            // 2. 转换为DTO
+            List<ExportDTO> exportData = ExportDTO.fromList(contacts);
+//
+
+
+            // 遍历并打印字段名及类型
+
+            System.out.println(contacts);
+            System.out.println(exportData);
+            EasyExcel.write(response.getOutputStream())
+                    .head(ExportDTO.class)
+                    .excelType(ExcelTypeEnum.XLSX)
+                    .sheet("用户列表")
+                    .doWrite(exportData);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    private void setExcelResponseProp(HttpServletResponse response, String rawFileName) throws UnsupportedEncodingException {
+        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        response.setCharacterEncoding("utf-8");
+        String fileName = URLEncoder.encode(rawFileName, StandardCharsets.UTF_8).replaceAll("\\+", "%20");
+        response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
+    }
 }
